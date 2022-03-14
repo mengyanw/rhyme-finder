@@ -131,7 +131,7 @@ function createList(data) {
 function showRyhmes(data) {
     outputDescription.textContent = `Words that rhyme with ${wordInput.value}:`
     groupedData = (groupBy(data, 'numSyllables'))
-    if (groupedData.length == 0) wordOutput.innerHTML = "(no results)";
+    if (data.length == 0) wordOutput.innerHTML = "(no results)";
     else {
         wordOutput.innerHTML = ""
         Object.entries(groupedData).forEach(entry => {
@@ -154,10 +154,20 @@ function showSynonyms(data) {
 
 showRhymesButton.addEventListener('click', () => {
     outputDescription.textContent = "Loading..."
+    wordOutput.innerHTML = "Loading..."
     datamuseRequest(getDatamuseRhymeUrl(wordInput.value), showRyhmes)
 })
 
 showSynonymsButton.addEventListener('click', () => {
     outputDescription.textContent = "Loading..."
+    wordOutput.innerHTML = "Loading..." 
     datamuseRequest(getDatamuseSimilarToUrl(wordInput.value), showSynonyms)
+})
+
+wordInput.addEventListener('keydown', (event) => {
+    if (event.keyCode === 13) {
+        outputDescription.textContent = "Loading..."
+        wordOutput.innerHTML = "Loading..."
+        datamuseRequest(getDatamuseRhymeUrl(wordInput.value), showRyhmes)
+    }
 })
